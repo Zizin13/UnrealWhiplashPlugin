@@ -72,8 +72,8 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
-!/internal
-!/internal/WhipLib
-!/internal/WhipLib/bin
-!/internal/WhipLib/bin/x64
-!/internal/WhipLib/bin/x64/WhipLib_static.dll
+!/Plugins/UnrealWhiplashPlugin/internal
+!/Plugins/UnrealWhiplashPlugin/internal/WhipLib
+!/Plugins/UnrealWhiplashPlugin/internal/WhipLib/bin
+!/Plugins/UnrealWhiplashPlugin/internal/WhipLib/bin/x64
+!/Plugins/UnrealWhiplashPlugin/internal/WhipLib/bin/x64/WhipLib_static.dll

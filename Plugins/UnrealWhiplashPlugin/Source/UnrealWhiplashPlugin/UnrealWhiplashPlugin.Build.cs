@@ -38,6 +38,7 @@ public class UnrealWhiplashPlugin : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
+				"Projects",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
@@ -49,5 +50,12 @@ public class UnrealWhiplashPlugin : ModuleRules
 				// ... add any modules that your module loads dynamically here ...
 			}
 			);
-	}
+
+        PublicDelayLoadDLLs.Add("WhipLib-static.dll");
+
+        if (Target.Platform == UnrealTargetPlatform.Win64)
+        {
+            RuntimeDependencies.Add(".\\internal\\WhipLib\\bin\\x64\\WhipLib_static.dll");
+        }
+    }
 }
