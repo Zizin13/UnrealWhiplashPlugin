@@ -13,7 +13,8 @@ void FUnrealWhiplashPluginModule::StartupModule()
 
   FString s = IPluginManager::Get().FindPlugin("UnrealWhiplashPlugin")->GetBaseDir();
   UE_LOG(LogTemp, Log, TEXT("%s"), *s);
-  m_pDllHandle = FPlatformProcess::GetDllHandle(*(IPluginManager::Get().FindPlugin("UnrealWhiplashPlugin")->GetBaseDir() + "\\internal\\WhipLib\\bin\\x64\\WhipLib-static.dll"));
+  m_pDllHandle = FPlatformProcess::GetDllHandle(*(IPluginManager::Get().FindPlugin("UnrealWhiplashPlugin")->GetBaseDir() + 
+                                                  "/internal/WhipLib/bin/x64/WhipLib_static.dll"));
   FString funcName = "wlLoadTexture";
   m_pfnLoadTexture = (wlLoadTextureFunc)FPlatformProcess::GetDllExport(m_pDllHandle, *funcName);
 }
