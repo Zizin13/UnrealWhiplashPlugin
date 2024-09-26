@@ -31,6 +31,7 @@ UTexture2D* UWhiplashLoader::LoadTexture(const FString &TexFile, const FString &
     delete[] pBmpBuf;
     return NULL;
   }
+  pUTexture->Filter = TextureFilter::TF_Nearest;
 
   //update texture
   void* TextureData = pUTexture->GetPlatformData()->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
@@ -84,6 +85,7 @@ FWhipModel UWhiplashLoader::LoadModel(EWhipModel model, const FString &TexFile, 
     delete[] pIndexBuf;
     return outModel;
   }
+  outModel.Texture->Filter = TextureFilter::TF_Nearest;
 
   //update texture
   void *TextureData = outModel.Texture->GetPlatformData()->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
