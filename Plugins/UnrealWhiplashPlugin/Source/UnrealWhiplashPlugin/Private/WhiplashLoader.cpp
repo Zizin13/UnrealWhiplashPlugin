@@ -25,7 +25,7 @@ UTexture2D* UWhiplashLoader::LoadTexture(const FString &TexFile, const FString &
 
   //create UTexture
   int iWidth = 64;
-  int iHeight = iBmpSize / 3 / 64;
+  int iHeight = iBmpSize / 4 / 64;
   pUTexture = UTexture2D::CreateTransient(iWidth, iHeight, PF_R8G8B8A8);
   if (!pUTexture) {
     delete[] pBmpBuf;
@@ -76,7 +76,7 @@ FWhipModel UWhiplashLoader::LoadModel(EWhipModel model, const FString &TexFile, 
 
   //create UTexture
   int iWidth = 64;
-  int iHeight = iBmpSize / 3 / 64;
+  int iHeight = iBmpSize / 4 / 64;
   outModel.Texture = UTexture2D::CreateTransient(iWidth, iHeight, PF_R8G8B8A8);
   if (!outModel.Texture) {
     delete[] pBmpBuf;
