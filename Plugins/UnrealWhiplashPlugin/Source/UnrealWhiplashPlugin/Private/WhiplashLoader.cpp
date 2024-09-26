@@ -93,7 +93,7 @@ FWhipModel UWhiplashLoader::LoadModel(EWhipModel model, const FString &TexFile, 
 
   //add vertices
   for (int i = 0; i < iNumVertices; ++i) {
-    FVector vertex = FVector(pVertexBuf[i].fX * -1, pVertexBuf[i].fY, pVertexBuf[i].fZ);
+    FVector vertex = FVector(pVertexBuf[i].fX, pVertexBuf[i].fY * -1, pVertexBuf[i].fZ);
     FVector normal = FVector(pVertexBuf[i].fNormalX, pVertexBuf[i].fNormalY, pVertexBuf[i].fNormalZ);
     FVector2D texCoord = FVector2D(pVertexBuf[i].fTexX, pVertexBuf[i].fTexY);
     outModel.Vertices.Add(vertex);
