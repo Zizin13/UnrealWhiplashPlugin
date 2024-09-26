@@ -16,6 +16,7 @@ public:
 
   // DLL functions
   wlLoadTextureFunc m_pfnLoadTexture;
+  wlGetModelFunc    m_pfnGetModel;
 
 private:
   void* m_pDllHandle;

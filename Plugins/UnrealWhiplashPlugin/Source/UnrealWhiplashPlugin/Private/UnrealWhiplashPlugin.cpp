@@ -20,17 +20,23 @@ void FUnrealWhiplashPluginModule::StartupModule()
   // This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
   g_pModule = this;
 
+  //load dll
   FString s = IPluginManager::Get().FindPlugin("UnrealWhiplashPlugin")->GetBaseDir();
   UE_LOG(LogWhiplash, Log, TEXT("%s"), *s);
   m_pDllHandle = FPlatformProcess::GetDllHandle(*(IPluginManager::Get().FindPlugin("UnrealWhiplashPlugin")->GetBaseDir() + 
                                                   "/internal/WhipLib/bin/x64/WhipLib_static.dll"));
+
+  //setup logging
   FString funcName = "wlSetLoggingCallback";
   wlSetLoggingCallbackFunc pfnSetLoggingCallback = (wlSetLoggingCallbackFunc)FPlatformProcess::GetDllExport(m_pDllHandle, *funcName);
   if (pfnSetLoggingCallback)
     pfnSetLoggingCallback(LogMessageCbStatic);
 
+  //get functions
   funcName = "wlLoadTexture";
   m_pfnLoadTexture = (wlLoadTextureFunc)FPlatformProcess::GetDllExport(m_pDllHandle, *funcName);
+  funcName = "wlGetModel";
+  m_pfnGetModel = (wlGetModelFunc)FPlatformProcess::GetDllExport(m_pDllHandle, *funcName);
 }
 
 //-------------------------------------------------------------------------------------------------
