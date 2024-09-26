@@ -2,8 +2,17 @@
 #include "Interfaces/IPluginManager.h"
 //-------------------------------------------------------------------------------------------------
 #define LOCTEXT_NAMESPACE "FUnrealWhiplashPluginModule"
+DEFINE_LOG_CATEGORY(LogWhiplash);
 //-------------------------------------------------------------------------------------------------
 FUnrealWhiplashPluginModule* g_pModule = NULL;
+//-------------------------------------------------------------------------------------------------
+
+static void LogMessageCbStatic(const char *szMsg, int iLen)
+{
+  FString sLog = szMsg;
+  UE_LOG(LogWhiplash, Log, TEXT("%s"), *sLog);
+}
+
 //-------------------------------------------------------------------------------------------------
 
 void FUnrealWhiplashPluginModule::StartupModule()
@@ -12,10 +21,15 @@ void FUnrealWhiplashPluginModule::StartupModule()
   g_pModule = this;
 
   FString s = IPluginManager::Get().FindPlugin("UnrealWhiplashPlugin")->GetBaseDir();
-  UE_LOG(LogTemp, Log, TEXT("%s"), *s);
+  UE_LOG(LogWhiplash, Log, TEXT("%s"), *s);
   m_pDllHandle = FPlatformProcess::GetDllHandle(*(IPluginManager::Get().FindPlugin("UnrealWhiplashPlugin")->GetBaseDir() + 
                                                   "/internal/WhipLib/bin/x64/WhipLib_static.dll"));
-  FString funcName = "wlLoadTexture";
+  FString funcName = "wlSetLoggingCallback";
+  wlSetLoggingCallbackFunc pfnSetLoggingCallback = (wlSetLoggingCallbackFunc)FPlatformProcess::GetDllExport(m_pDllHandle, *funcName);
+  if (pfnSetLoggingCallback)
+    pfnSetLoggingCallback(LogMessageCbStatic);
+
+  funcName = "wlLoadTexture";
   m_pfnLoadTexture = (wlLoadTextureFunc)FPlatformProcess::GetDllExport(m_pDllHandle, *funcName);
 }
 

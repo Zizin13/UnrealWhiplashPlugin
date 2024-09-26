@@ -4,6 +4,8 @@
 #include "Modules/ModuleManager.h"
 #include "../internal/WhipLib/include/WhipLib.h"
 //-------------------------------------------------------------------------------------------------
+DECLARE_LOG_CATEGORY_EXTERN(LogWhiplash, Log, All);
+//-------------------------------------------------------------------------------------------------
 
 class FUnrealWhiplashPluginModule : public IModuleInterface
 {
