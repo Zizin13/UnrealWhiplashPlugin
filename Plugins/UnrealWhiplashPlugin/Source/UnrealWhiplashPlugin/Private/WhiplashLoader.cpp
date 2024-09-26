@@ -4,33 +4,33 @@
 #include "../internal/WhipLib/include/WhipLib.h"
 //-------------------------------------------------------------------------------------------------
 
-UTexture2D* UWhiplashLoader::LoadTexture(const FString &TexFile, const FString &PalFile, bool& IsValid, int32& Width, int32& Height)
+UTexture2D* UWhiplashLoader::LoadTexture(const FString &TexFile, const FString &PalFile, bool& IsValid)
 {
   IsValid = false;
   UTexture2D* pUTexture = NULL;
-  Width = 0;
-  Height = 0;
 
   //load texture
-  uint8 *pBmpBuf = new uint8[900000];
+  uint8 *pBmpBuf = new uint8[1000000];
   int iBmpSize = -1;
   if (g_pModule && g_pModule->m_pfnLoadTexture) {
     iBmpSize = g_pModule->m_pfnLoadTexture(pBmpBuf,
-                                           900000,
+                                           1000000,
                                            TCHAR_TO_ANSI(*TexFile),
                                            TCHAR_TO_ANSI(*PalFile));
   }
-  if (iBmpSize <= 0)
+  if (iBmpSize <= 0) {
+    delete[] pBmpBuf;
     return NULL;
-
-  //update size output
-  Width = 64;
-  Height = iBmpSize / 3 / 64;
+  }
 
   //create UTexture
-  pUTexture = UTexture2D::CreateTransient(Width, Height, PF_R8G8B8A8);
-  if (!pUTexture)
+  int iWidth = 64;
+  int iHeight = iBmpSize / 3 / 64;
+  pUTexture = UTexture2D::CreateTransient(iWidth, iHeight, PF_R8G8B8A8);
+  if (!pUTexture) {
+    delete[] pBmpBuf;
     return NULL;
+  }
 
   //update texture
   void* TextureData = pUTexture->GetPlatformData()->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
@@ -39,6 +39,7 @@ UTexture2D* UWhiplashLoader::LoadTexture(const FString &TexFile, const FString &
   pUTexture->UpdateResource();
 
   IsValid = true;
+  delete[] pBmpBuf;
   return pUTexture;
 }
 

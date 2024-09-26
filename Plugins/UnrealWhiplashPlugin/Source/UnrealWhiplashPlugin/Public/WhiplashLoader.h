@@ -14,7 +14,7 @@ class UNREALWHIPLASHPLUGIN_API UWhiplashLoader : public UBlueprintFunctionLibrar
   GENERATED_BODY()
 
   UFUNCTION(BlueprintCallable, Category = "WhiplashLoader")
-  static UTexture2D* LoadTexture(const FString& TexFile, const FString &PalFile, bool& IsValid, int32& Width, int32& Height);
+  static UTexture2D* LoadTexture(const FString& TexFile, const FString &PalFile, bool& IsValid);
 
 };
 
