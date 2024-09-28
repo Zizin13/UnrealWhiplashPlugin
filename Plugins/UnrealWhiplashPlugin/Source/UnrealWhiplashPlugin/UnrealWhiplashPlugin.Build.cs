@@ -26,6 +26,9 @@ public class UnrealWhiplashPlugin : ModuleRules
 			new string[]
 			{
 				"Core",
+				"DynamicMesh",
+				"GeometryCore",
+				"GeometryFramework"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
