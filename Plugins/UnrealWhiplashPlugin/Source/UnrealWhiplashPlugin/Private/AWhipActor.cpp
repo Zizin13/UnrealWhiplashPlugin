@@ -1,5 +1,6 @@
 #include "AWhipActor.h"
 #include "UnrealWhiplashPlugin.h"
+#include "DynamicMesh/MeshAttributeUtil.h"
 //-------------------------------------------------------------------------------------------------
 
 // Sets default values
@@ -11,12 +12,6 @@ AAWhipActor::AAWhipActor()
   MeshComponent = CreateDefaultSubobject<UDynamicMeshComponent>(
       TEXT("MeshComponent"), false);
   SetRootComponent(MeshComponent);
-  BuildMesh();
-  *(MeshComponent->GetMesh()) = m_mesh;
-  //UMaterialInstanceDynamic *pMaterial = UMaterialInstanceDynamic::Create(0, Mesh->GetMaterial(0));
-  //pMaterial->SetTextureParameterValue("Texture", m_pTex);
-  //MeshComponent->SetMaterial(0, pMateral);
-  MeshComponent->NotifyMeshUpdated();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -25,8 +20,24 @@ AAWhipActor::AAWhipActor()
 void AAWhipActor::BeginPlay()
 {
   Super::BeginPlay();
+}
 
+//-------------------------------------------------------------------------------------------------
 
+void AAWhipActor::PostLoad()
+{
+  Super::PostLoad();
+
+  BuildMesh();
+  *(MeshComponent->GetMesh()) = m_mesh;
+
+  UMaterial *pParentMaterial = LoadObject<UMaterial>(NULL,
+    TEXT("/Plugins/UnrealWhiplashPlugin/Content/Content/WhiplashBaseMaterial.WhiplashBaseMaterial"));
+  UMaterialInstanceDynamic *pMaterial = UMaterialInstanceDynamic::Create(pParentMaterial, this);
+  pMaterial->SetTextureParameterValue("Texture", m_pTex);
+  MeshComponent->SetMaterial(0, pMaterial);
+
+  MeshComponent->NotifyMeshUpdated();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -100,11 +111,12 @@ void AAWhipActor::BuildMesh()
 
   //add triangles
   for (int i = 0; i < iNumIndices; i += 3) {
-    int iIndex1 = pIndexBuf[i];
-    int iIndex2 = pIndexBuf[i + 1];
-    int iIndex3 = pIndexBuf[i + 2];
-    m_mesh.AppendTriangle(iIndex1, iIndex2, iIndex3);
+    m_mesh.AppendTriangle(pIndexBuf[i], pIndexBuf[i + 1], pIndexBuf[i + 2]);
   }
+
+  //m_mesh.EnableAttributes();
+  //UE::Geometry::CopyVertexUVsToOverlay(m_mesh, *(m_mesh.Attributes()->PrimaryUV()));
+  //UE::Geometry::CopyVertexNormalsToOverlay(m_mesh, *(m_mesh.Attributes()->PrimaryNormals()));
 
   delete[] pBmpBuf;
   delete[] pVertexBuf;
