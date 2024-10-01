@@ -32,7 +32,8 @@ void AAWhipActor::PostLoad()
   *(MeshComponent->GetMesh()) = m_mesh;
 
   UMaterial *pParentMaterial = LoadObject<UMaterial>(NULL,
-    TEXT("/Plugins/UnrealWhiplashPlugin/Content/Content/WhiplashBaseMaterial.WhiplashBaseMaterial"));
+    TEXT("/Game/WhiplashBaseMaterial.WhiplashBaseMaterial"));
+  //  TEXT("/All/Plugins/UnrealWhiplashPlugin/Content/WhiplashBaseMaterial.WhiplashBaseMaterial"));
   UMaterialInstanceDynamic *pMaterial = UMaterialInstanceDynamic::Create(pParentMaterial, this);
   pMaterial->SetTextureParameterValue("Texture", m_pTex);
   MeshComponent->SetMaterial(0, pMaterial);
