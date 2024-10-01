@@ -12,6 +12,12 @@ AAWhipActor::AAWhipActor()
   MeshComponent = CreateDefaultSubobject<UDynamicMeshComponent>(
       TEXT("MeshComponent"), false);
   SetRootComponent(MeshComponent);
+  
+  UMaterial *pParentMaterial = LoadObject<UMaterial>(NULL,
+    TEXT("/Game/WhiplashBaseMaterial.WhiplashBaseMaterial"));
+  //  TEXT("/All/Plugins/UnrealWhiplashPlugin/Content/WhiplashBaseMaterial.WhiplashBaseMaterial"));
+  MaterialInstance = UMaterialInstanceDynamic::Create(pParentMaterial, MeshComponent, TEXT("MaterialInstance"));
+  MeshComponent->SetMaterial(0, MaterialInstance);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -27,17 +33,10 @@ void AAWhipActor::BeginPlay()
 void AAWhipActor::PostLoad()
 {
   Super::PostLoad();
-
+  
   BuildMesh();
   *(MeshComponent->GetMesh()) = m_mesh;
-
-  UMaterial *pParentMaterial = LoadObject<UMaterial>(NULL,
-    TEXT("/Game/WhiplashBaseMaterial.WhiplashBaseMaterial"));
-  //  TEXT("/All/Plugins/UnrealWhiplashPlugin/Content/WhiplashBaseMaterial.WhiplashBaseMaterial"));
-  UMaterialInstanceDynamic *pMaterial = UMaterialInstanceDynamic::Create(pParentMaterial, this);
-  pMaterial->SetTextureParameterValue("Texture", m_pTex);
-  MeshComponent->SetMaterial(0, pMaterial);
-
+  MaterialInstance->SetTextureParameterValue("TextureParam", m_pTex);  
   MeshComponent->NotifyMeshUpdated();
 }
 

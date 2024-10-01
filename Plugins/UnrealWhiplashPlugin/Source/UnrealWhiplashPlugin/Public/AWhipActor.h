@@ -19,6 +19,9 @@ public:
   UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
   UDynamicMeshComponent *MeshComponent;
   
+  UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+  UMaterialInstanceDynamic *MaterialInstance;
+  
 protected:
         // Called when the game starts or when spawned
   virtual void BeginPlay() override;
