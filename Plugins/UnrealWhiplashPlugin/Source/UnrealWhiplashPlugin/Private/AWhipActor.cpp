@@ -15,8 +15,7 @@ AAWhipActor::AAWhipActor()
   SetRootComponent(MeshComponent);
   
   UMaterial *pParentMaterial = LoadObject<UMaterial>(NULL,
-    TEXT("/Game/WhiplashBaseMaterial.WhiplashBaseMaterial"));
-  //  TEXT("/All/Plugins/UnrealWhiplashPlugin/Content/WhiplashBaseMaterial.WhiplashBaseMaterial"));
+    TEXT("/UnrealWhiplashPlugin/Content/WhiplashBaseMaterial.WhiplashBaseMaterial"));
   MaterialInstance = UMaterialInstanceDynamic::Create(pParentMaterial, MeshComponent, TEXT("MaterialInstance"));
   MeshComponent->SetMaterial(0, MaterialInstance);
 }
