@@ -5,6 +5,7 @@
 
 // Sets default values
 AAWhipActor::AAWhipActor()
+  : m_mesh(true, false, true, false)
 {
   // Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
   PrimaryActorTick.bCanEverTick = true;
@@ -36,7 +37,7 @@ void AAWhipActor::PostLoad()
   
   BuildMesh();
   *(MeshComponent->GetMesh()) = m_mesh;
-  MaterialInstance->SetTextureParameterValue("TextureParam", m_pTex);  
+  MaterialInstance->SetTextureParameterValue("TextureParam", m_pTex);
   MeshComponent->NotifyMeshUpdated();
 }
 
@@ -100,6 +101,8 @@ void AAWhipActor::BuildMesh()
   m_pTex->UpdateResource();
 
   //add vertices
+  m_mesh.EnableVertexNormals(FVector3f(1.0f, 0.0f, 0.0f));
+  m_mesh.EnableVertexUVs(FVector2f(0.0f, 0.0f));
   for (int i = 0; i < iNumVertices; ++i) {
     FVector3d vertex = FVector3d(pVertexBuf[i].fX, pVertexBuf[i].fY * -1, pVertexBuf[i].fZ);
     FVector3f normal = FVector3f(pVertexBuf[i].fNormalX, pVertexBuf[i].fNormalY, pVertexBuf[i].fNormalZ);
@@ -114,9 +117,9 @@ void AAWhipActor::BuildMesh()
     m_mesh.AppendTriangle(pIndexBuf[i], pIndexBuf[i + 1], pIndexBuf[i + 2]);
   }
 
-  //m_mesh.EnableAttributes();
-  //UE::Geometry::CopyVertexUVsToOverlay(m_mesh, *(m_mesh.Attributes()->PrimaryUV()));
-  //UE::Geometry::CopyVertexNormalsToOverlay(m_mesh, *(m_mesh.Attributes()->PrimaryNormals()));
+  m_mesh.EnableAttributes();
+  UE::Geometry::CopyVertexUVsToOverlay(m_mesh, *(m_mesh.Attributes()->PrimaryUV()));
+  UE::Geometry::CopyVertexNormalsToOverlay(m_mesh, *(m_mesh.Attributes()->PrimaryNormals()));
 
   delete[] pBmpBuf;
   delete[] pVertexBuf;
