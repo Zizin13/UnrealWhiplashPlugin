@@ -77,3 +77,4 @@ DerivedDataCache/*
 !/Plugins/UnrealWhiplashPlugin/internal/WhipLib/bin
 !/Plugins/UnrealWhiplashPlugin/internal/WhipLib/bin/x64
 !/Plugins/UnrealWhiplashPlugin/internal/WhipLib/bin/x64/WhipLib_static.dll
+/PluginProject.sln.DotSettings.user
