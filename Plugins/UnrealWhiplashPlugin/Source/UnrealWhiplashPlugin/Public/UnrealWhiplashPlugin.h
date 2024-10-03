@@ -15,8 +15,16 @@ public:
   virtual void ShutdownModule() override;
 
   // DLL functions
-  wlLoadTextureFunc m_pfnLoadTexture;
-  wlGetModelFunc    m_pfnGetModel;
+  wlLoadTextureFunc     m_pfnLoadTexture;
+  wlGetModelFunc        m_pfnGetModel;
+  wlLoadTrackFunc       m_pfnLoadTrack;
+  wlUnloadTrackFunc     m_pfnUnloadTrack;
+  wlShutdownModuleFunc  m_pfnShutdownModule;
+  wlGetTrackTexFunc     m_pfnGetTrackTex;
+  wlGetTrackBldFunc     m_pfnGetTrackBld;
+  wlGetNumSignsFunc     m_pfnGetNumSigns;
+  wlGetTrackModelFunc   m_pfnGetTrackModel;
+  wlGetSignModelFunc    m_pfnGetSignModel;
 
 private:
   void* m_pDllHandle;

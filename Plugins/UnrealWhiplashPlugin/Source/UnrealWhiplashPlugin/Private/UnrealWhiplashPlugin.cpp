@@ -37,6 +37,22 @@ void FUnrealWhiplashPluginModule::StartupModule()
   m_pfnLoadTexture = (wlLoadTextureFunc)FPlatformProcess::GetDllExport(m_pDllHandle, *funcName);
   funcName = "wlGetModel";
   m_pfnGetModel = (wlGetModelFunc)FPlatformProcess::GetDllExport(m_pDllHandle, *funcName);
+  funcName = "wlLoadTrack";
+  m_pfnLoadTrack = (wlLoadTrackFunc)FPlatformProcess::GetDllExport(m_pDllHandle, *funcName);
+  funcName = "wlUnloadTrack";
+  m_pfnUnloadTrack = (wlUnloadTrackFunc)FPlatformProcess::GetDllExport(m_pDllHandle, *funcName);
+  funcName = "wlShutdownModule";
+  m_pfnShutdownModule = (wlShutdownModuleFunc)FPlatformProcess::GetDllExport(m_pDllHandle, *funcName);
+  funcName = "wlGetTrackTex";
+  m_pfnGetTrackTex = (wlGetTrackTexFunc)FPlatformProcess::GetDllExport(m_pDllHandle, *funcName);
+  funcName = "wlGetTrackBld";
+  m_pfnGetTrackBld = (wlGetTrackBldFunc)FPlatformProcess::GetDllExport(m_pDllHandle, *funcName);
+  funcName = "wlGetNumSigns";
+  m_pfnGetNumSigns = (wlGetNumSignsFunc)FPlatformProcess::GetDllExport(m_pDllHandle, *funcName);
+  funcName = "wlGetTrackModel";
+  m_pfnGetTrackModel = (wlGetTrackModelFunc)FPlatformProcess::GetDllExport(m_pDllHandle, *funcName);
+  funcName = "wlGetSignModel";
+  m_pfnGetSignModel = (wlGetSignModelFunc)FPlatformProcess::GetDllExport(m_pDllHandle, *funcName);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -45,6 +61,8 @@ void FUnrealWhiplashPluginModule::ShutdownModule()
 {
   // This function may be called during shutdown to clean up your module.  For modules that support dynamic reloading,
   // we call this function before unloading the module.
+  if (m_pfnShutdownModule)
+    m_pfnShutdownModule();
   FPlatformProcess::FreeDllHandle(m_pDllHandle);
 }
 
