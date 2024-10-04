@@ -74,14 +74,14 @@ void AAWhipTrack::BuildMesh()
 
   //load model
   uint8 *pBmpBuf = new uint8[1000000];
-  tWhiplashVertex *pVertexBuf = new tWhiplashVertex[10000]; //cars have 400
-  uint32 *pIndexBuf = new uint32[100000]; //cars have 600
+  tWhiplashVertex *pVertexBuf = new tWhiplashVertex[50000]; //track 3 has a little over 45k
+  uint32 *pIndexBuf = new uint32[100000]; //track 3 has a little over 65k
   int iBmpSize = -1;
   int iNumVertices = -1;
   int iNumIndices = -1;
   if (!g_pModule->m_pfnGetTrackModel(m_iTrackId,
                                      pVertexBuf,
-                                     10000 * sizeof(tWhiplashVertex),
+                                     50000 * sizeof(tWhiplashVertex),
                                      pIndexBuf,
                                      100000 * sizeof(uint32),
                                      iNumVertices,
