@@ -13,7 +13,7 @@ class UNREALWHIPLASHPLUGIN_API AAWhipActor : public AActor
   GENERATED_BODY()
 
 public:
-        // Sets default values for this actor's properties
+  // Sets default values for this actor's properties
   AAWhipActor();
 
   UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
@@ -23,12 +23,12 @@ public:
   UMaterialInstanceDynamic *MaterialInstance;
   
 protected:
-        // Called when the game starts or when spawned
+  // Called when the game starts or when spawned
   virtual void BeginPlay() override;
   void PostLoad() override;
 
 public:
-        // Called every frame
+  // Called every frame
   virtual void Tick(float DeltaTime) override;
 
 private:
